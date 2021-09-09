@@ -43,7 +43,7 @@ namespace SprayTime {
 
 			if ( IsServer && Input.Pressed( InputButton.Attack2 ) )
 			{
-				SpawnAttack1();
+				//SpawnAttack1();
 			}
 
 		}

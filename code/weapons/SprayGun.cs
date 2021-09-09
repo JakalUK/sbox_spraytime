@@ -73,8 +73,6 @@ partial class SprayGun : SprayBaseWeapon
 				selectedSize = newSize;
 				selectedSizeExp = (float)Math.Pow(newSize, 1.5f);
 			}
-
-			Log.Info( selectedSize );
 		}
 
 
