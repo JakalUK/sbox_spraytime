@@ -1,5 +1,6 @@
 ﻿using Sandbox;
 using SprayTime;
+using System;
 
 [Library( "weapon_pistol", Title = "Pistol", Spawnable = true )]
 partial class SprayGun : SprayBaseWeapon
@@ -10,8 +11,15 @@ partial class SprayGun : SprayBaseWeapon
 	public override float SecondaryRate => 1.0f;
 
 	public int selectedColor = 0;
-	public int selectedSize = 1;
-	public int maxSize = 20;
+	public float selectedSize = 1;
+	public float selectedSizeExp = 1;
+	public int selectedStyle = 0;
+	public int numOfStyles = 3;
+	public float[] sizeRange = { 0.30f, 12.0f};
+
+	public string[] decals = { "decals/multisplat1.decal",
+							   "decals/multismooth1.decal",
+							   "decals/multisquare1.decal"};
 
 	public TimeSince TimeSinceDischarge { get; set; }
 
@@ -56,8 +64,22 @@ partial class SprayGun : SprayBaseWeapon
 			selectedColor = -1;
 		}
 
-		if (selectedSize + Input.MouseWheel > 0 & selectedSize + Input.MouseWheel < maxSize){
-			selectedSize += Input.MouseWheel;
+		if (Input.MouseWheel != 0)
+		{
+			float newSize = selectedSize + Input.MouseWheel/3.0f;
+
+			if (newSize < sizeRange[1] & newSize > sizeRange[0])
+			{
+				selectedSize = newSize;
+				selectedSizeExp = (float)Math.Pow(newSize, 1.5f);
+			}
+
+			Log.Info( selectedSize );
+		}
+
+
+		if ( Input.Pressed( InputButton.Menu )){
+			selectedStyle = (selectedStyle+1) % numOfStyles;
 		}
 	}
 	private void Discharge()
@@ -100,13 +122,13 @@ partial class SprayGun : SprayBaseWeapon
 		var tr = TraceSpray( pos, pos + forward * 5000, bulletSize );
 
 		if (IsServer & tr.Entity.IsValid()){
-			string[] decals = { "decals/multisplat1.decal" };
-			var decalPath = Rand.FromArray(decals);
+
+			var decalPath = decals[selectedStyle];
 			if ( decalPath != null )
 			{
 				if (SprayDecalDefinition.ByPath.TryGetValue( decalPath, out var decal) )
 				{
-					decal.SprayPlaceUsingTrace( tr, selectedSize, selectedColor);
+					decal.SprayPlaceUsingTrace( tr, selectedSizeExp, selectedColor);
 				}
 			}
 		}

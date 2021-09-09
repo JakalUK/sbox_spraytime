@@ -1,0 +1,39 @@
+<!-- kv3 encoding:text:version{e21c7f3c-8a33-41c5-9977-a76d3a32aa0d} format:generic:version{7412167c-06e9-4698-aff2-e63eb59037e7} -->
+{
+	data = 
+	{
+		Decals = 
+		[
+			{
+				Material = "materials/decals/smooth1.vmat"
+				Depth = [ 8.0, 3.0, 0.0 ]
+				KeepAspect = true
+				Rotation = [ 0.0, 0.0, 1.0 ]
+			},
+			{
+				Material = "materials/decals/smooth2.vmat"
+				Depth = [ 8.0, 3.0, 0.0 ]
+				Rotation = [ 0.0, 0.0, 1.0 ]
+				KeepAspect = true
+			},
+			{
+				Material = "materials/decals/smooth3.vmat"
+				KeepAspect = true
+				Depth = [ 8.0, 3.0, 0.0 ]
+				Rotation = [ 0.0, 0.0, 1.0 ]
+			},
+			{
+				Material = "materials/decals/smooth4.vmat"
+				KeepAspect = true
+				Depth = [ 8.0, 3.0, 0.0 ]
+				Rotation = [ 0.0, 0.0, 1.0 ]
+			},
+			{
+				Material = "materials/decals/smooth5.vmat"
+				KeepAspect = true
+				Depth = [ 8.0, 3.0, 0.0 ]
+				Rotation = [ 0.0, 0.0, 1.0 ]
+			},
+		]
+	}
+}

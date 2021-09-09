@@ -13,7 +13,7 @@ namespace SprayTime
 		public SprayGame()
 		{
 
-			Global.TickRate = 140;
+			Global.TickRate = 180;
 
 			if ( IsServer )
 			{
