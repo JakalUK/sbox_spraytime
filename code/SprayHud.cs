@@ -1,5 +1,5 @@
 ﻿using Sandbox.UI;
-
+using SprayTime.UI;
 
 namespace SprayTime
 {
@@ -11,6 +11,8 @@ namespace SprayTime
 			if ( IsClient )
 			{
 				RootPanel.SetTemplate( "/sprayhud.html" );
+				RootPanel.AddChild<Crosshair>();
+				RootPanel.StyleSheet.Load( "/code/ui/stylesheet.scss" );
 			}
 		}
 	}

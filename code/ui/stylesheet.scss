@@ -1,0 +1,13 @@
+Crosshair {
+	position: fixed;
+	left: 50%;
+	top: 50%;
+	width: 4px;
+	height: 6px;
+	margin-left: -2px;
+	margin-top: -3px;
+	transition: width 30ms ease-in;
+	transition: height 30ms ease-in;
+	border: 1px dotted rgb(17, 17, 17);
+	border-radius: 50%;
+}

@@ -1,6 +1,7 @@
 ﻿using Sandbox;
 using SprayTime;
 using System;
+using SprayTime.UI;
 
 [Library( "weapon_pistol", Title = "Pistol", Spawnable = true )]
 partial class SprayGun : SprayBaseWeapon
@@ -11,11 +12,11 @@ partial class SprayGun : SprayBaseWeapon
 	public override float SecondaryRate => 1.0f;
 
 	public int selectedColor = 0;
-	public float selectedSize = 1;
+	public float SelectedSize = 1;
 	public float selectedSizeExp = 1;
 	public int selectedStyle = 0;
 	public int numOfStyles = 3;
-	public float[] sizeRange = { 0.30f, 12.0f};
+	public float[] sizeRange = { 0.30f, 12.0f };
 
 	public string[] decals = { "decals/multisplat1.decal",
 							   "decals/multismooth1.decal",
@@ -39,7 +40,7 @@ partial class SprayGun : SprayBaseWeapon
 
 		//ShootEffects();
 		//PlaySound( "rust_pistol.shoot" );
-		Spray( Owner.EyePos, Owner.EyeRot.Forward, 0.05f, 3.0f);
+		Spray( Owner.EyePos, Owner.EyeRot.Forward, 0.05f, 3.0f );
 	}
 
 	public override bool CanPrimaryAttack()
@@ -50,34 +51,54 @@ partial class SprayGun : SprayBaseWeapon
 	public override void Simulate( Client owner )
 	{
 		base.Simulate( owner );
-		if ( Input.Pressed( InputButton.Slot1)){
+		if ( Input.Pressed( InputButton.Slot1 ) )
+		{
 			selectedColor = 0;
-		} else if ( Input.Pressed( InputButton.Slot2)){
+		}
+		else if ( Input.Pressed( InputButton.Slot2 ) )
+		{
 			selectedColor = 1;
-		} else if ( Input.Pressed( InputButton.Slot3)){
+		}
+		else if ( Input.Pressed( InputButton.Slot3 ) )
+		{
 			selectedColor = 2;
-		}else if ( Input.Pressed( InputButton.Slot4)){
+		}
+		else if ( Input.Pressed( InputButton.Slot4 ) )
+		{
 			selectedColor = 3;
-		}else if ( Input.Pressed( InputButton.Slot5)){
+		}
+		else if ( Input.Pressed( InputButton.Slot5 ) )
+		{
 			selectedColor = 4;
-		}else if ( Input.Pressed( InputButton.Slot6)){
+		}
+		else if ( Input.Pressed( InputButton.Slot6 ) )
+		{
 			selectedColor = -1;
 		}
 
-		if (Input.MouseWheel != 0)
+		if ( Input.MouseWheel != 0 )
 		{
-			float newSize = selectedSize + Input.MouseWheel/3.0f;
+			float newSize = SelectedSize + Input.MouseWheel / 3.0f;
 
-			if (newSize < sizeRange[1] & newSize > sizeRange[0])
+			if ( newSize < sizeRange[1] & newSize > sizeRange[0] )
 			{
-				selectedSize = newSize;
-				selectedSizeExp = (float)Math.Pow(newSize, 1.5f);
+				SelectedSize = newSize;
+				selectedSizeExp = (float)Math.Pow( newSize, 1.5f );
 			}
 		}
 
 
-		if ( Input.Pressed( InputButton.Menu )){
-			selectedStyle = (selectedStyle+1) % numOfStyles;
+		if ( Input.Pressed( InputButton.Menu ) )
+		{
+			selectedStyle = (selectedStyle + 1) % numOfStyles;
+		}
+
+
+		//Update the crosshair hud
+		if ( IsClient )
+		{
+			Crosshair.Instance.Radius = SelectedSize;
+			Crosshair.Instance.Color = SprayDecalDefinition.ColorFromInt( selectedColor );
 		}
 	}
 	private void Discharge()
@@ -113,20 +134,21 @@ partial class SprayGun : SprayBaseWeapon
 		anim.SetParam( "holdtype_handedness", 0 );
 	}
 
-	public virtual void Spray( Vector3 pos, Vector3 dir, float spread, float bulletSize)
+	public virtual void Spray( Vector3 pos, Vector3 dir, float spread, float bulletSize )
 	{
 		var forward = dir;
 		forward = forward.Normal;
 		var tr = TraceSpray( pos, pos + forward * 5000, bulletSize );
 
-		if (IsServer & tr.Entity.IsValid()){
+		if ( IsServer & tr.Entity.IsValid() )
+		{
 
 			var decalPath = decals[selectedStyle];
 			if ( decalPath != null )
 			{
-				if (SprayDecalDefinition.ByPath.TryGetValue( decalPath, out var decal) )
+				if ( SprayDecalDefinition.ByPath.TryGetValue( decalPath, out var decal ) )
 				{
-					decal.SprayPlaceUsingTrace( tr, selectedSizeExp, selectedColor);
+					decal.SprayPlaceUsingTrace( tr, selectedSizeExp, selectedColor );
 				}
 			}
 		}

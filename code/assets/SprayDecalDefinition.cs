@@ -27,6 +27,36 @@ namespace SprayTime
 
 		public DecalEntry[] Decals { get; set; }
 
+
+		//Not a fan of this, is there a way we dont have to use the color as an index?
+		public static Color ColorFromInt( int color )
+		{
+			Color colorToReturn = Color.White;
+			switch ( color )
+			{
+				case 0:
+					colorToReturn = Color.White;
+					break;
+				case 1:
+					colorToReturn = Color.Black;
+					break;
+				case 2:
+					colorToReturn = Color.Red;
+					break;
+				case 3:
+					colorToReturn = Color.Green;
+					break;
+				case 4:
+					colorToReturn = Color.Blue;
+					break;
+				default:
+					colorToReturn = Color.White;
+					break;
+			}
+
+			return colorToReturn;
+		}
+
 		protected override void PostLoad()
 		{
 			ByPath[Path] = this;
@@ -62,17 +92,19 @@ namespace SprayTime
 			Place( entry.Material, tr.Entity, tr.Bone, pos, rot, new Vector3( w, h, d ) );
 		}
 
-		public void SprayPlaceUsingTrace( TraceResult tr, float scale, int color)
+		public void SprayPlaceUsingTrace( TraceResult tr, float scale, int color )
 		{
 			DecalEntry entry;
 
-			if (color < 0 ){
+			if ( color < 0 )
+			{
 				entry = Rand.FromArray( Decals );
-			} else
+			}
+			else
 			{
 				entry = Decals[color];
 			}
-			
+
 			if ( entry == null )
 				return;
 
@@ -80,7 +112,6 @@ namespace SprayTime
 			var h = entry.Height.GetValue() * scale;
 			var d = entry.Depth.GetValue();
 			var r = entry.Rotation.GetValue();
-
 			if ( entry.KeepAspect )
 			{
 				h = w * (entry.Width.x / entry.Height.x);
