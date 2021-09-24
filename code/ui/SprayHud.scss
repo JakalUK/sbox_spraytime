@@ -1,0 +1,72 @@
+
+SprayPanel {
+	color: red;
+}
+
+label {
+	color: red;
+}
+
+
+text.title {
+	font-family: Poppins;
+	font-size: 35px;
+	font-weight: 700;
+	color: white;
+	text-shadow: 3px 1px 1px rgba(0, 0, 0, 0.7);
+}
+text.version {
+	font-family: Poppins;
+	font-size: 20px;
+	font-weight: 600;
+	color: white;
+	text-shadow: 2px 1px 1px rgba(0, 0, 0, 0.7);
+	top: 10px;
+}
+
+text.icon {
+	font-size: 35px;
+	font-weight: 700;
+}
+
+.title-container {
+	left: 2%;
+	top: 2%;
+	width: 400px;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-evenly;
+	height: 55px;
+}
+
+
+.text-wrapper {
+	width: 80%;
+	border-radius: 8px, 0px, 0px, 0px;
+	background-color: rgba(0,0,0,0.6);
+	border: 1px solid rgba(0,0,0,0.8);
+	justify-content: center;
+}
+
+.version-wrapper {
+	width: 20%;
+	border-radius: 0px, 8px, 0px, 0px;
+	background-color: rgba(0,0,0,0.6);
+	border: 1px solid rgba(0,0,0, 0.8);
+	justify-content: center;
+}
+
+ControlsMenu {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+}
+
+
+SpraySettings {
+	position: absolute;
+	height: 100%;
+	width: 100%;
+	left: 0%;
+	top: 0%;
+}

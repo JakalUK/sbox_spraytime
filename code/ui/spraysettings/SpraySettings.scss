@@ -1,0 +1,94 @@
+﻿
+.menu {
+    pointer-events: none;
+    opacity: 0;
+    position: absolute;
+    left: 50%;
+}
+
+.spray-settings {
+    position: absolute;
+    width: 135px;
+    right: 2%;
+    top: 2%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.settings-header {
+    border: 1px solid black;
+    border-radius: 8px 8px 0px 0px;
+    background-color: rgba(0 0 0, 0.6);
+    height: 30px;
+    align-items: center;
+}
+
+.settings-title {
+    color: white;
+    font-weight: 700;
+    font-family: Poppins;
+    width: 100%;
+    text-align: center;
+    font-size: 12px;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 1);
+}
+
+
+.menuopen {
+    pointer-events: all;
+    opacity: 1;
+}
+
+
+.colorinfo {
+    border: 1px solid black;
+    background-color: rgba(0 0 0, 0.6);
+    width: 100%;
+    border-radius: 0px 0px 8px 8px;
+    padding: 5px;
+}
+
+.spraysquare{
+    width: 20px;
+    height: 20px;
+    border-radius: 5px;
+    border: 1px solid black;
+    margin-right: 5px;
+}
+
+
+.colorinfo {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.info-label {
+    color: #FFF;
+    font-weight: 700;
+    font-family: Poppins;
+    font-size: 12px;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 1);
+}
+
+
+.bind-text {
+    color: black;
+    font-weight: 800;
+    font-family: Poppins;
+}
+
+.info-row {
+    width: 100%;
+    justify-content: center;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.info-container{
+    width: 100%;
+    margin-left: 18%;
+}
+
+

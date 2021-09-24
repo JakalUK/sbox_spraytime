@@ -4,6 +4,7 @@ using Sandbox.UI.Construct;
 using System;
 using System.IO;
 using System.Threading.Tasks;
+using SprayTime.UI;
 
 
 namespace SprayTime
@@ -13,12 +14,12 @@ namespace SprayTime
 		public SprayGame()
 		{
 
-			Global.TickRate = 180;
+			Global.TickRate = 100;
 
 			if ( IsServer )
 			{
 				Log.Info( "SprayTime Was Created Serverside!" );
-				new SprayHudEntity();
+				new SprayHud();
 			}
 
 			if ( IsClient )
@@ -33,8 +34,17 @@ namespace SprayTime
 
 			var player = new SprayPlayer();
 			client.Pawn = player;
-
 			player.Respawn();
+		}
+
+		public override void ClientDisconnect( Client cl, NetworkDisconnectionReason reason )
+		{
+
+			var clgun = cl.Pawn.Inventory.Active as SprayGun;
+			clgun.ClearSprays();
+
+			base.ClientDisconnect(cl, reason);
+
 		}
 	}
 

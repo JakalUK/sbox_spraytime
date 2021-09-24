@@ -1,0 +1,16 @@
+// THIS FILE IS AUTO-GENERATED
+
+Layer0
+{
+	shader "projected_decals.vfx"
+
+	//---- Decal ----
+	F_BLEND_MODE 1 // Mod2X
+	F_TRIPLANAR_MAPPING 1
+
+	//---- Color ----
+	TextureColor "[1.000000 1.000000 1.000000 0.000000]"
+
+	//---- Translucent ----
+	TextureTranslucency "materials/basetexturefiles/smooth1_trans.png"
+}

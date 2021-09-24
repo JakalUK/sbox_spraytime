@@ -1,0 +1,66 @@
+﻿.controls-container {
+    width: 400px;
+    position: absolute;
+    transition: all 0.5s ease-in;
+    left: 2%;
+    top: 2%;
+    margin-top: 55px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+
+.controls-menu {
+    background-color: rgba(0 0 0, 0.9);
+    transition: all 0.5s ease-in;
+    height: 0px;
+    width: 100%;
+
+    &.active {
+        opacity: 1;
+        height: 200px;
+        transition: all 0.5s ease-out;
+    }
+}
+
+
+.controls-tab {
+    height: 30px;
+    background-color: rgba(0,0,0, 0.6);
+    border: 1px solid rgba(0,0,0,0.8);
+    border-radius: 0px 0px 8px 8px;
+    width: 100%;
+    justify-content: center;
+}
+
+.controls {
+    padding: 5%;
+    padding-top: 2%;
+    display: none;
+    flex-direction: column;
+    align-items: flex-start;
+ 
+
+    &.active {
+        display: flex;
+    }
+}
+
+
+.controls-title{
+    color: white;
+    font-size: 20px;
+    margin: 10px 0px 10px 0px;
+}
+
+.controls-text{
+    color: white;
+    font-weight: 200;
+    margin-left: 20px;
+}
+
+.tab-text{
+    color: white;
+    margin-top: 5px;
+}

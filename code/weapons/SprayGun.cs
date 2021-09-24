@@ -1,6 +1,9 @@
 ﻿using Sandbox;
+using Sandbox.UI;
 using SprayTime;
 using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 [Library( "weapon_pistol", Title = "Pistol", Spawnable = true )]
 partial class SprayGun : SprayBaseWeapon
@@ -10,12 +13,29 @@ partial class SprayGun : SprayBaseWeapon
 	public override float PrimaryRate => 100.0f;
 	public override float SecondaryRate => 1.0f;
 
+	public int layer = 0;
+	
+	public static Color[] colors = { Color.Black, Color.White, Color.Red, Color.Green, Color.Blue, Color.Orange };
+	public int numOfColors = colors.Length;
 	public int selectedColor = 0;
+	public Color activeColor = Color.Black;
+
 	public float selectedSize = 1;
 	public float selectedSizeExp = 1;
+
+	public static string sizeFormat = "0.0";
+	public string sizeString = 1.0f.ToString(sizeFormat);
+
+	public float[] sizeRange = { 0.30f, 8.5f };
+
 	public int selectedStyle = 0;
+	public string[] styles = { "Soft Round", "Hard Round", "Square" };
 	public int numOfStyles = 3;
-	public float[] sizeRange = { 0.30f, 12.0f};
+
+	public Sound spraysound;
+
+	public List<SprayPanel> allSprays = new List<SprayPanel>();
+
 
 	public string[] decals = { "decals/multisplat1.decal",
 							   "decals/multismooth1.decal",
@@ -39,8 +59,55 @@ partial class SprayGun : SprayBaseWeapon
 
 		//ShootEffects();
 		//PlaySound( "rust_pistol.shoot" );
-		Spray( Owner.EyePos, Owner.EyeRot.Forward, 0.05f, 3.0f);
+		//Spray( Owner.EyePos, Owner.EyeRot.Forward, 0.05f, 3.0f);
+		Spray( Owner.EyePos, Owner.EyeRot.Forward, 0.05f, 3.0f );
+
 	}
+
+
+	public override void CreateHudElements()
+	{
+		if ( Local.Hud == null ) return;
+		CrosshairPanel = new SprayCrosshair();
+		CrosshairPanel.Parent = Local.Hud;
+		CrosshairPanel.AddClass("SprayCrosshair");
+	}
+
+	[ClientRpc]
+	public virtual void Spray( Vector3 pos, Vector3 dir, float spread, float bulletSize )
+	{
+		var forward = dir;
+		forward = forward.Normal;
+		var tr = TraceSpray( pos, pos + forward * 5000, bulletSize );
+		if (tr.Entity.IsValid() )
+		{
+
+			var decalPath = decals[selectedStyle];
+			if ( decalPath != null )
+			{
+				if ( SprayDecalDefinition.ByPath.TryGetValue( decalPath, out var decal ) )
+				{
+					Rotation rot = Rotation.LookAt( tr.Normal ) * Rotation.FromAxis( Vector3.Forward, 0);
+					Transform t = new Transform( tr.EndPos, rot);
+					allSprays.Add(new SprayPanel( t, activeColor, selectedStyle, selectedSizeExp ));
+				}
+			}
+		}
+
+	}
+
+	[Property]
+	public string CurrentStyle
+	{
+		get => styles[selectedStyle];
+	}
+
+
+	public override bool CanReload()
+	{
+		return false;
+	}
+
 
 	public override bool CanPrimaryAttack()
 	{
@@ -50,36 +117,52 @@ partial class SprayGun : SprayBaseWeapon
 	public override void Simulate( Client owner )
 	{
 		base.Simulate( owner );
-		if ( Input.Pressed( InputButton.Slot1)){
-			selectedColor = 0;
-		} else if ( Input.Pressed( InputButton.Slot2)){
-			selectedColor = 1;
-		} else if ( Input.Pressed( InputButton.Slot3)){
-			selectedColor = 2;
-		}else if ( Input.Pressed( InputButton.Slot4)){
-			selectedColor = 3;
-		}else if ( Input.Pressed( InputButton.Slot5)){
-			selectedColor = 4;
-		}else if ( Input.Pressed( InputButton.Slot6)){
-			selectedColor = -1;
-		}
 
-		if (Input.MouseWheel != 0)
+		if ( Input.MouseWheel != 0 )
 		{
-			float newSize = selectedSize + Input.MouseWheel/3.0f;
+			float newSize = selectedSize + Input.MouseWheel / 3.0f;
 
-			if (newSize < sizeRange[1] & newSize > sizeRange[0])
+			if ( newSize < sizeRange[1] & newSize > sizeRange[0] )
 			{
 				selectedSize = newSize;
-				selectedSizeExp = (float)Math.Pow(newSize, 1.5f);
+				selectedSizeExp = (float)Math.Pow( newSize, 1.5f );
+				sizeString = selectedSizeExp.ToString( sizeFormat );
 			}
+			else if ( newSize <= sizeRange[0] ){sizeString = "Min";}
+			else { sizeString = "Max";}
 		}
 
 
-		if ( Input.Pressed( InputButton.Menu )){
+		if (Input.Pressed( InputButton.Attack1 ) )
+		{
+			spraysound = PlaySound( "spray.loop" );
+			
+		}
+
+		if ( Input.Released( InputButton.Attack1 ) )
+		{
+			spraysound.Stop();
+		}
+
+		if ( Input.Pressed( InputButton.Flashlight)){
 			selectedStyle = (selectedStyle+1) % numOfStyles;
 		}
+
+		if ( Input.Pressed( InputButton.Reload) )
+		{
+			ClearSprays();
+		}
 	}
+
+	public void ClearSprays()
+		{
+			 foreach ( SprayPanel spray in allSprays)
+			 {
+				 spray.Delete();
+			 }
+			 allSprays.Clear();
+		}
+
 	private void Discharge()
 	{
 		if ( TimeSinceDischarge < 0.5f )
@@ -113,7 +196,9 @@ partial class SprayGun : SprayBaseWeapon
 		anim.SetParam( "holdtype_handedness", 0 );
 	}
 
-	public virtual void Spray( Vector3 pos, Vector3 dir, float spread, float bulletSize)
+
+	[ClientRpc]
+	public virtual void SprayDecal( Vector3 pos, Vector3 dir, float spread, float bulletSize)
 	{
 		var forward = dir;
 		forward = forward.Normal;
@@ -126,7 +211,11 @@ partial class SprayGun : SprayBaseWeapon
 			{
 				if (SprayDecalDefinition.ByPath.TryGetValue( decalPath, out var decal) )
 				{
-					decal.SprayPlaceUsingTrace( tr, selectedSizeExp, selectedColor);
+					//decal.SprayPlaceUsingTrace( tr, selectedSizeExp, selectedColor);
+					Log.Info( "try" );
+					var t = new Sandbox.SceneObject(null, Transform);
+					//var f = new Spraytime.Spray();
+
 				}
 			}
 		}
@@ -144,7 +233,6 @@ partial class SprayGun : SprayBaseWeapon
 				.Ignore( this )
 				.Size( radius )
 				.Run();
-
 		return tr;
 	}
 
