@@ -38,7 +38,7 @@ namespace SprayTime
 			{
 				isHidden = !isHidden;
 
-				if ( isHidden ){
+				if ( !isHidden ){
 					tabtext.Text = "↓         Controls (tab)         ↓";
 				} 
 				else{
