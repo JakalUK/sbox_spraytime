@@ -57,9 +57,6 @@ partial class SprayGun : SprayBaseWeapon
 
 		(Owner as AnimEntity)?.SetAnimBool( "b_attack", true );
 
-		//ShootEffects();
-		//PlaySound( "rust_pistol.shoot" );
-		//Spray( Owner.EyePos, Owner.EyeRot.Forward, 0.05f, 3.0f);
 		Spray( Owner.EyePos, Owner.EyeRot.Forward, 0.05f, 3.0f );
 
 	}
