@@ -6,30 +6,34 @@ $form-border-active: 3px solid $primary;
 
 $corner-radius: 8px;
 
-mainmenupanel > navigator > .navigator-canvas > .navigator-body.has-sidebar
+mainmenupanel .navigator-canvas .navigator-body
 {
-	flex-direction: row;
-	padding: 0px;
-	margin: 0px;
-
 	> .sidebar
 	{
-		width: 450px;
+		width: 400px;
 		flex-shrink: 0;
 		flex-grow: 0;
 		flex-direction: column;
-		background-image: linear-gradient( to bottom, rgba( #191e28, 1 ), rgba( #191e28, 0.5 ), rgba( #191e28, 1 ) );
-		box-shadow: 0px 0 100px 10px rgba( black, 0.3 );
 		z-index: 10;
-		backdrop-filter: blur( 20px );
+		transition: width 0.1s ease;
+		padding-bottom: 90px;
+
+		&.wider
+		{
+			width: 500px;
+		}
 
 		> .sidebar-inner
 		{
-			padding-top: $padding-head;
-			padding-left: $padding-edge;
 			padding-right: 30px;
 			flex-direction: column;
-			flex-grow: 1;
+			height: 100%;
+		}
+
+		&.is-right > .sidebar-inner
+		{
+			padding-left: 30px;
+			padding-right: 00px;
 		}
 
 		.section
@@ -56,108 +60,19 @@ mainmenupanel > navigator > .navigator-canvas > .navigator-body.has-sidebar
 				margin: 10px 20px;
 				font-size: 13px;
 			}
+
+			.row
+			{
+				.button:not( :last-child )
+				{
+					margin-right: 10px;
+				}
+			}
 		}
 
 		.spacer
 		{
 			flex-grow: 1;
-		}
-
-		.textentry
-		{
-			border: $form-border;
-			border-radius: $corner-radius;
-			font-size: 13px;
-			color: #c6d4ee;
-			padding: 14px;
-			padding-bottom: 10px; // wtf?
-			font-family: poppins;
-			font-weight: 500;
-
-			.placeholder
-			{
-				opacity: 1;
-				font-size: 13px;
-				padding: 0;
-				padding: 13px;
-				opacity: 0.5;
-				font-weight: 300;
-			}
-		}
-
-		.button
-		{
-			border: $form-border;
-			border-radius: $corner-radius;
-			margin-bottom: 5px;
-			background-color: transparent;
-			font-family: poppins;
-			font-weight: 500;
-			font-size: 15px;
-			color: #c6d4ee;
-
-			&:hover
-			{
-				border: 3px solid $primary;
-				color: $primary-fg;
-				background-color: transparent;
-			}
-
-			&.active, &.active:hover
-			{
-				border: 3px solid $primary;
-				background-color: transparent;
-				color: $primary-fg;
-			}
-
-			&:active
-			{
-				border: 3px solid $primary-fg;
-				background-color: transparent;
-				color: $primary-fg;
-			}
-
-			&.is-danger
-			{
-				border: 3px solid $danger;
-				background-color: $danger;
-				color: $danger-fg;
-
-				&:hover
-				{
-					background-color: $danger-fg;
-					border: 3px solid $danger-fg;
-					color: $danger;
-				}
-
-				&:active
-				{
-					background-color: $danger-fg;
-					border: 3px solid white;
-					color: $danger;
-				}
-			}
-
-			&.is-primary
-			{
-				border: 3px solid $primary;
-				background-color: $primary;
-				color: $primary-fg;
-
-				&:hover
-				{
-					border: 3px solid $primary-fg;
-					background-color: $primary;
-					color: $primary-fg;
-				}
-
-				&:active
-				{
-					border: 3px solid $primary-fg;
-					background-color: $primary-fg;
-					color: $primary;
-				}
-			}
 		}
 
 		.checkbox
@@ -227,42 +142,12 @@ mainmenupanel > navigator > .navigator-canvas > .navigator-body.has-sidebar
 		}
 	}
 
-	> .canvas
+	.nothing-found
 	{
-		padding-left: 100px;
-		padding-right: 100px;
-		padding-top: $padding-head;
-		flex-shrink: 1;
-		flex-direction: column;
-		flex-grow: 1;
-		overflow: scroll;
-
-		&.icon-canvas
-		{
-			flex-grow: 1;
-			flex-direction: row;
-			flex-wrap: wrap;
-			padding-bottom: $padding-head;
-
-			.cell
-			{
-				padding: 20px;
-			}
-		}
-
-		> .navigator-canvas
-		{
-			left: 100px;
-			top: $padding-head;
-			position: absolute;
-			transition: all 0.1s ease;
-
-			&.hidden
-			{
-				opacity: 0;
-				transform: scale( 0.95 );
-			}
-		}
+		text-align: center;
+		color: white;
+		opacity: 0.2;
+		text-transform: lowercase;
 	}
 }
 
@@ -275,7 +160,6 @@ mainmenupanel > navigator > .navigator-canvas > .navigator-body.has-sidebar .sid
 	box-shadow: none;
 	z-index: 9;
 	transition: all 0.1s ease-out;
-	background-image: linear-gradient( to bottom, rgba( #191e28, 0.9 ), rgba( #191e28, 0.4 ), rgba( #191e28, 0.9 ) );
 
 	> .sidebar-inner
 	{
@@ -289,4 +173,113 @@ mainmenupanel > navigator > .navigator-canvas > .navigator-body.has-sidebar .sid
 		width: 0px;
 		opacity: 0;
 	}
+}
+
+.sidebar .textentry
+{
+	border: $form-border;
+	border-radius: $corner-radius;
+	font-size: 13px;
+	color: #c6d4ee;
+	font-family: poppins;
+	font-weight: 500;
+
+
+}
+
+.sidebar .splitcontainer .splitter
+{
+
+}
+
+.sidebar .listbox
+{
+	font-size: 15px;
+	color: white;
+	font-family: Poppins;
+}
+
+.sidebar .button
+{
+	border: $form-border;
+	border-radius: $corner-radius;
+	margin-bottom: 5px;
+	background-color: transparent;
+	font-family: poppins;
+	font-weight: 500;
+	font-size: 15px;
+	color: #c6d4ee;
+
+	&:hover
+	{
+		border: 3px solid $primary;
+		color: $primary-fg;
+		background-color: transparent;
+	}
+
+	&.active, &.active:hover
+	{
+		border: 3px solid $primary;
+		background-color: transparent;
+		color: $primary-fg;
+	}
+
+	&:active
+	{
+		border: 3px solid $primary-fg;
+		background-color: transparent;
+		color: $primary-fg;
+	}
+
+	&.is-danger
+	{
+		border: 3px solid $danger;
+		background-color: $danger;
+		color: $danger-fg;
+
+		&:hover
+		{
+			background-color: $danger-fg;
+			border: 3px solid $danger-fg;
+			color: $danger;
+		}
+
+		&:active
+		{
+			background-color: $danger-fg;
+			border: 3px solid white;
+			color: $danger;
+		}
+	}
+
+	&.is-primary
+	{
+		border: 3px solid $primary;
+		background-color: $primary;
+		color: $primary-fg;
+
+		&:hover
+		{
+			border: 3px solid $primary-fg;
+			background-color: $primary;
+			color: $primary-fg;
+		}
+
+		&:active
+		{
+			border: 3px solid $primary-fg;
+			background-color: $primary-fg;
+			color: $primary;
+		}
+	}
+
+	&.borderless
+	{
+		border: none;
+	}
+}
+
+.sidebar .section
+{
+	flex-shrink: 0;
 }

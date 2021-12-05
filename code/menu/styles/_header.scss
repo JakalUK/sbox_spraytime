@@ -33,12 +33,11 @@ $header-spacing-bottom: 32px !default;
 			pointer-events: all;
 		}
 
-		.gameicon
+		.gamelogoicon
 		{
 			width: 200px;
 			height: 100px;
 		}
-
 
 		.button_group
 		{
@@ -77,11 +76,84 @@ $header-spacing-bottom: 32px !default;
 	.button
 	{
 		font-size: 21px;
+		background-position: center;
+		background-repeat: no-repeat;
+		background-size: cover;
+
+		&.is-task
+		{
+			border: 2px solid rgba( $primary, 0.1 );
+
+			&:hover:not( .active )
+			{
+				border: 2px solid rgba( $primary, 0.4 );
+			}
+
+			&.active
+			{
+				border: 2px solid $primary;
+			}
+		}
 
 		iconpanel
 		{
 			font-size: 26px;
 		}
+
+		.alert
+		{
+			position: absolute;
+			background-color: $primary;
+			border-radius: 100px;
+			padding: 5px;
+			font-size: 14px;
+			top: -7px;
+			right: -7px;
+			color: $primary-fg;
+			display: none;
+		}
+
+		&.has-alert .alert
+		{
+			display: flex;
+		}
 	}
+
+	.streamdeck
+	{
+		margin-right: 30px;
+
+		&.has-label > iconpanel
+		{
+			margin-right: 0px;
+		}
+
+		> label
+		{
+			font-size: 11px;
+			position: absolute;
+			background-color: white;
+			color: $primary;
+			font-weight: bold;
+			border-radius: 100px;
+			pointer-events: none;
+			padding: 3px 6px;
+			justify-content: center;
+			align-items: center;
+			right: -7px;
+			top: -7px;
+			box-shadow: 0px 5px 10px rgba( black, 0.4 );
+		}
+	}
+}
+
+.streamdeck
+{
+	display: none;
+}
+
+.has-streamer-account .streamdeck
+{
+	display: flex;
 }
 

@@ -18,8 +18,7 @@
 //
 @PointClass base(BaseProperties_spraytime) = weapon_pistol : ""
 [
-	currentstyle(string) : "Current Style" :  : ""
-	enable_shadows(boolean) [ group="Render Properties" ] : "Shadow Casting" : 1 : "Whether this entity should cast shadows or not"
+	enable_shadows(boolean) { group = "Rendering" } : "Shadow Casting" : 1 : "Whether this entity should cast shadows or not"
 
 	input SetColor(string) : "Sets the color of this entity. Format is '255 255 255 255'."
 ]

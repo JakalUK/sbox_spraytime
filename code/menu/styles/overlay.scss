@@ -96,7 +96,7 @@ MenuOverlay
 			border-radius: 30px;
 			flex-direction: column;
 			min-width: 400px;
-			align-items: end;
+			align-items: stretch;
 			cursor: default;
 
 			.progress-bar
@@ -132,7 +132,7 @@ MenuOverlay
 
 				.button
 				{
-					position: initial;
+					position: relative;
 					width: 48px;
 					height: 48px;
 					background-color: red;

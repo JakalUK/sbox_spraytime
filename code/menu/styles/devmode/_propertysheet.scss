@@ -11,16 +11,16 @@
 		flex-grow: 1;
 		overflow: scroll;
 
-		> .form-header
+		.field-header
 		{
-			.iconpanel
+			> .iconpanel
 			{
 				font-size: 20px;
 				margin-right: 10px;
 				color: $blue;
 			}
 
-			.form-header-label
+			> .label
 			{
 				font-size: 13px;
 				font-weight: bolder;
@@ -32,7 +32,7 @@
 			flex-shrink: 0;
 		}
 
-		> .form-row
+		 .field
 		{
 			padding: 0;
 			flex-shrink: 0;
@@ -54,7 +54,7 @@
 				pointer-events: none;
 			}
 
-			.form-label
+			> .label
 			{
 				width: 130px;
 				flex-shrink: 0;
@@ -71,7 +71,7 @@
 				overflow: hidden;
 			}
 
-			.form-value
+			> .control
 			{
 				flex-shrink: 1;
 				flex-grow: 1;
@@ -82,11 +82,17 @@
 					background-color: $control-dark;
 					border: 1px solid #050505;
 					border-radius: 2px;
-					padding: 4px 6px;
+					align-items: center;
+					
 					min-height: 0;
 					margin: 0px;
 					color: $control-text;
 					font-weight: normal;
+
+					.content-label, .placeholder
+					{
+						padding: 0px 5px;
+					}
 
 					&:hover
 					{
@@ -101,13 +107,17 @@
 					}
 				}
 
+				> .textentry, .button
+				{
+					height: 22px;
+				}
+
 				dropdown, .button
 				{
 					background: linear-gradient( to top, $control-light, $control);
 					border: 1px solid #050505;
 					border-radius: 3px;
 					padding: 4px 8px;
-					min-height: 0;
 					margin: 0px;
 					color: #fff;
 					box-shadow: 1px 1px 10px rgba( black, 0.4 );
@@ -143,8 +153,6 @@
 					> .textentry
 					{
 						flex-grow: 1;
-						padding: 3px 30px;
-						padding-top: 5px;
 						align-items: center;
 					}
 

@@ -62,6 +62,13 @@ $button-size: 50px;
 		min-width: $button-size;
 		justify-content: center;
 	}
+
+	&.disabled
+	{
+		opacity: 0.3;
+		pointer-events: none;
+		// filter: saturate( 0 );
+	}
 }
 
 .click-sound
